@@ -67,8 +67,10 @@ if not collMgr.get_client().has_collection(collection_name=tb_name):
 #res = collMgr.get_client().insert(collection_name=tb_name, data=data)
 
 
-queries = ["When was AI founded",
-           "Where was Alan Turing born?"]
+# queries = ["When was AI founded",
+#            "Where was Alan Turing born?"]
+
+queries = ["When was AI founded"]
 
 query_embeddings = bge_m3_ef.encode_queries(queries)
 
@@ -79,8 +81,22 @@ query_embeddings = bge_m3_ef.encode_queries(queries)
 # Since the sparse embeddings are in a 2D csr_array format, we convert them to a list for easier manipulation.
 #print("Sparse query dim:", bge_m3_ef.dim["sparse"], list(query_embeddings["sparse"])[0].shape)
 
-res = collMgr.get_client().search(collection_name=tb_name, data=query_embeddings["dense"], limit=2, output_fields=["text", "subject"])
-#logger.info(res)
+search_params = {
+    "metric_type": "IP",
+    "params": {
+        "radius": 0.5
+    }
+}
+
+res = collMgr.get_client().search(
+    collection_name=tb_name,
+    data=query_embeddings["dense"],
+    limit=2,
+    search_params=search_params,
+    output_fields=["text", "subject"])
+
+if len(res) <= 0 or len(res[0]) <= 0:
+    logger.info("can't hit your query")
 
 for re in res:
     for e in re:
