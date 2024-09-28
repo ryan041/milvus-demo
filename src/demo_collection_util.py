@@ -9,7 +9,7 @@ class DemoCollectionMgr:
 
     def create_deme_collection(self, name='demo'):
         # create a schema
-        schema = MilvusClient.create_schema(auto_id=True, enable_dynamic_field=False)
+        schema = MilvusClient.create_schema(auto_id=True, enable_dynamic_field=False, description='用于测试向量数据库功能')
         schema.add_field(field_name='id', datatype=DataType.INT64, is_primary=True, description='数据ID值，自动生成')
         schema.add_field(field_name='vector', datatype=DataType.FLOAT_VECTOR, dim=1024, description='文本对应的向量值')
         schema.add_field(field_name='text', datatype=DataType.VARCHAR, max_length=2048, description='文本')

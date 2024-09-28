@@ -8,17 +8,18 @@ import my_logger
 
 logger = my_logger.create_logger()
 
-
+# load model from local
 model_path = 'D:\\code\\LLM\\bge-m3'
+model_name = 'BAAI/bge-m3'
 
 startTime = time.time()
 tokenizer = AutoTokenizer.from_pretrained(model_path)
 model = AutoModel.from_pretrained(model_path)
 
 bge_m3_ef = BGEM3EmbeddingFunction(
-    model_name=model_path, # Specify the model name
-    device='cpu', # Specify the device to use, e.g., 'cpu' or 'cuda:0'
-    use_fp16=False # Specify whether to use fp16. Set to `False` if `device` is `cpu`.
+    model_name=model_path,  # Specify the model name or a local model path
+    device='cpu',  # Specify the device to use, e.g., 'cpu' or 'cuda:0'
+    use_fp16=False  # Specify whether to use fp16. Set to `False` if `device` is `cpu`.
 )
 
 logger.info("初始化model 耗时={:.3f} s".format((time.time() - startTime)))
