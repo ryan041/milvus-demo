@@ -1,6 +1,7 @@
 
-reference: https://milvus.io/docs/schema.md
+一个基于知识库的问答示例
 
+reference: https://milvus.io/docs/schema.md
 
 TODO
 1.支持索引类型区别，如IP, L2, COSINE, JACCARD, HAMMING等
